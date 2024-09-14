@@ -30,7 +30,7 @@ namespace FeedNexus
                 app.UseSwagger();
                 app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "FeedNexus API V1"));
             }
-
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {

@@ -1,3 +1,6 @@
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
 namespace FeedNexus
 {
     public class Program
@@ -11,7 +14,14 @@ namespace FeedNexus
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureKestrel(options =>
+                    {
+                        options.ListenAnyIP(5001, listenOptions =>
+                        {
+                            listenOptions.UseHttps();
+                        });
+                    })
+                    .UseStartup<Startup>();
                 });
     }
 }
