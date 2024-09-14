@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FeedNexus.Models;
 using FeedNexus.Data;
 using Microsoft.EntityFrameworkCore;
+using FeedNexus.DTO;
 
 namespace FeedNexus.Controllers
 {
@@ -18,12 +19,17 @@ namespace FeedNexus.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRssFeed([FromBody] RssFeed rssFeed)
+        public async Task<IActionResult> AddRssFeed([FromBody] RssFeedDto rssFeedDto)
         {
-            if (rssFeed == null || string.IsNullOrEmpty(rssFeed.Url))
+            if (rssFeedDto == null || string.IsNullOrEmpty(rssFeedDto.Url))
                 return BadRequest("Invalid data.");
 
-            rssFeed.CreatedAt = DateTime.UtcNow;
+            var rssFeed = new RssFeed
+            {
+                Title = rssFeedDto.Title,
+                Url = rssFeedDto.Url,
+                CreatedAt = DateTime.UtcNow
+            };
 
             _context.RssFeeds.Add(rssFeed);
             await _context.SaveChangesAsync();
