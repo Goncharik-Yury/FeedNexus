@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FeedNexus.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FeedNexus
 {

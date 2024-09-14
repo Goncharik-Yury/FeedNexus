@@ -1,4 +1,6 @@
-﻿public class RssFeed
+﻿namespace FeedNexus.Models;
+
+public class RssFeed
 {
     public int Id { get; set; }
     public string Title { get; set; }

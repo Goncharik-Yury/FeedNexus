@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
+namespace FeedNexus.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
 public class HomeController : ControllerBase

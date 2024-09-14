@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FeedNexus.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace FeedNexus.Data;
 
 public class ApplicationDbContext : DbContext
 {
