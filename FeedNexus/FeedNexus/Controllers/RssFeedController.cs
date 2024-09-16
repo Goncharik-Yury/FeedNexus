@@ -4,6 +4,7 @@ using FeedNexus.Models;
 using FeedNexus.Data;
 using Microsoft.EntityFrameworkCore;
 using FeedNexus.DTO;
+using FeedNexus.BusinessLogic;
 
 namespace FeedNexus.Controllers
 {
@@ -12,10 +13,12 @@ namespace FeedNexus.Controllers
     public class RssFeedController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly RssService _rssService;
 
-        public RssFeedController(ApplicationDbContext context)
+        public RssFeedController(ApplicationDbContext context, RssService rssService)
         {
             _context = context;
+            _rssService = rssService;
         }
 
         [HttpGet]
@@ -23,6 +26,21 @@ namespace FeedNexus.Controllers
         {
             var rssFeeds = await _context.RssFeeds.ToListAsync();
             return Ok(rssFeeds);
+        }
+
+        [HttpGet("{url}")]
+        public async Task<ActionResult<List<RssItem>>> GetRssFeed(string url)
+        {
+            try
+            {
+                url = "http://feeds.feedburner.com/TechCrunch/";
+                var rssItems = await _rssService.GetRssFeedAsync(url);
+                return Ok(rssItems);
+            }
+            catch (HttpRequestException ex)
+            {
+                return BadRequest($"Error retrieving RSS feed: {ex.Message}");
+            }
         }
 
         [HttpPost]

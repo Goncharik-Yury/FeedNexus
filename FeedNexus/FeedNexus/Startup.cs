@@ -1,4 +1,5 @@
-﻿using FeedNexus.Data;
+﻿using FeedNexus.BusinessLogic;
+using FeedNexus.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace FeedNexus
@@ -15,6 +16,9 @@ namespace FeedNexus
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddHttpClient();
+            services.AddScoped<RssService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
