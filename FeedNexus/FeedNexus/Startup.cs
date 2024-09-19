@@ -18,6 +18,7 @@ namespace FeedNexus
             services.AddControllers();
 
             services.AddHttpClient();
+            services.AddSingleton<RssSourceService>();
             services.AddScoped<RssService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>

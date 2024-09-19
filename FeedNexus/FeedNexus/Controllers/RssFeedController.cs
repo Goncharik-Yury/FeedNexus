@@ -33,7 +33,6 @@ namespace FeedNexus.Controllers
         {
             try
             {
-                url = "http://feeds.feedburner.com/TechCrunch/";
                 var rssItems = await _rssService.GetRssFeedAsync(url);
                 return Ok(rssItems);
             }
