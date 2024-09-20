@@ -18,6 +18,18 @@ namespace FeedNexus
             services.AddControllers();
 
             services.AddHttpClient();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularApp",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
+
             services.AddSingleton<RssSourceService>();
             services.AddScoped<RssService>();
 
@@ -36,6 +48,9 @@ namespace FeedNexus
                 app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "FeedNexus API V1"));
             }
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAngularApp");
+
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
