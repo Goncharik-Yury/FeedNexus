@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { RssFeedService } from '../../services/rss-feed.service';
+import { HttpClient } from '@angular/common/http';
+
+interface RssFeed {
+  id: number;         // Добавь id
+  title: string;
+  url: string;       // Это поле url
+  createdAt: string; // Или Date, если ты используешь объект даты
+}
 
 @Component({
   selector: 'app-rss-feed-list',
@@ -7,17 +14,14 @@ import { RssFeedService } from '../../services/rss-feed.service';
   styleUrls: ['./rss-feed-list.component.scss']
 })
 export class RssFeedListComponent implements OnInit {
-  rssFeeds: any[] = [];
+  feeds: RssFeed[] = [];
 
-  constructor(private rssFeedService: RssFeedService) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.getRssFeeds();
-  }
-
-  getRssFeeds(): void {
-    this.rssFeedService.getRssFeeds().subscribe((data) => {
-      this.rssFeeds = data;
-    });
+    this.http.get<RssFeed[]>('https://localhost:5001/api/RssFeed')
+      .subscribe(data => {
+        this.feeds = data;
+      });
   }
 }
